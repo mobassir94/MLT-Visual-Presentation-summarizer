@@ -32,4 +32,4 @@ step 4 -> filter 2 : select least frames by eliminating duplicate (use high IOU 
 
 step 5 -> filter 3(high detection overlap count followed by high ssim checking) : on filter 2 data, we again count matched bboxes between image pair(using dbresnet50) and check if we have high bbox detection coverage or not,if yes,then we eliminate first image from image pair as we have detected near duplicate again
 
-**NOTE ->  the solution is multilingual,hence it should work on english,bangla,hindi etc presentation videos**
+**NOTE ->  the solution is multilingual,hence it should work on english,bangla,hindi,arabic etc presentation videos**
