@@ -23,17 +23,17 @@ This work demonstrates how to convert multilingual presentation videos into read
 ---
 **Rough Pseudo Code:**
 
-* Step 1 -> Gather youtube videos / presentation videos. 
+* Step 1 ⮕ Gather youtube videos / presentation videos. 
 
-* Step 2 -> Extract distinct unique frames from videos.
+* Step 2 ⮕ Extract distinct unique frames from videos.
 
-* Step 3 -> Filter 1: Apply ssim on consecutive frame pairs with high confident on `Step 2` dataset to reduce redundant frames (use ssim on gpu).
+* Step 3 ⮕ Filter 1: Apply ssim on consecutive frame pairs with high confident on `Step 2` dataset to reduce redundant frames (use ssim on gpu).
 
-* Step 4 -> Filter 2: Select least frames by eliminating duplicate (use high IOU hit count between image pairs for more filtering on `Filter 1` dataset).
+* Step 4 ⮕ Filter 2: Select least frames by eliminating duplicate (use high IOU hit count between image pairs for more filtering on `Filter 1` dataset).
 
-* Step 5 -> Filter 3 (high detection overlap count followed by high ssim checking): On `Filter 2` data, we again count matched bboxes between image pair(using dbresnet50) and check if we have high bbox detection coverage or not, if yes, then we eliminate first image from image pair as we have detected near duplicate again.
+* Step 5 ⮕ Filter 3 (high detection overlap count followed by high ssim checking): On `Filter 2` data, we again count matched bboxes between image pair(using dbresnet50) and check if we have high bbox detection coverage or not, if yes, then we eliminate first image from image pair as we have detected near duplicate again.
 
-* Step 6 -> Sort `Step 5` images and convert to pdf.
+* Step 6 ⮕ Sort `Step 5` images and convert to pdf.
 
 ---
 # Execution:
