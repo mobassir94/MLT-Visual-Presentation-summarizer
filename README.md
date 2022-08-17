@@ -18,9 +18,9 @@ To tackle these issues, we combine both `SSIM` and `dbresnet50` for efficient 3 
 
 This work demonstrates how to convert multilingual presentation videos into readable pdf file. The solution is developed by combining structural similarity index measure (`SSIM`) with [Real-Time Scene Text Detection with Differentiable Binarization and Adaptive Scale Fusion](https://arxiv.org/abs/2202.10304) of [paddleocr](https://github.com/PaddlePaddle/PaddleOCR).
 
-***NB: We compute both ssim and dbnet using gpu, so the code is enough fast.**
+**NB: We compute both ssim and dbnet using gpu, so the code is enough fast.**
 
-
+---
 **Rough Pseudo Code:**
 
 * Step 1 -> Gather youtube videos / presentation videos. 
