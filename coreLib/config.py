@@ -19,6 +19,7 @@ class Hparams:
         self.rmdir                  =   True
         self.frames_per_second      =   fps
         self.ssim_threshold         =   0.98
+        self.hausdorff_threshold    =   0.5
         self.visualize_img_pairs    =   False
         self.iou_threshold          =   0.9
         self.min_match_thr          =   2
