@@ -18,7 +18,7 @@ from paddleocr import PaddleOCR
 import sys
 sys.path.append('../')
 from coreLib.utils import create_dir, is_supported, LOG_INFO, video_to_images, zipdir,\
-    calculate_ssim, viz_img_pair, count_matched_bboxes, unique_frames_to_pdf
+    calculate_ssim, calculate_hausdorff_distance, inpaintredBox, viz_img_pair, count_matched_bboxes, unique_frames_to_pdf
 from coreLib.config import Hparams
 
 def main(args):
@@ -94,12 +94,27 @@ def main(args):
     images = os.listdir(images_path)
     images.sort(key=lambda f: int(''.join(filter(str.isdigit, f))))
 
+    ## annotation check in the key frames
+    for idx in range(len(images)):
+        img = cv2.imread(os.path.join(images_path, images[idx]))
+        # remove annotattion paintng
+        annot_res = inpaintredBox(img) 
+        cv2.imwrite(os.path.join(images_path, images[idx]), annot_res)
+
     ## filtered images w.r.t. SSIM
     filtered_images_path = create_dir(imgs_dir, 'filtered')
     for idx in range(len(images) - 1):
         img1 = cv2.imread(os.path.join(images_path, images[idx]))
         img2 = cv2.imread(os.path.join(images_path, images[idx+1]))
         score = calculate_ssim(hp, img1, img2, filtered_images_path, images[idx])
+
+    # ## filtered images w.r.t. Hausdorff Distance
+    # filtered_images_path = create_dir(imgs_dir, 'filtered')
+    # for idx in range(len(images) - 1):
+    #     img1 = cv2.imread(os.path.join(images_path, images[idx]), 0)
+    #     img2 = cv2.imread(os.path.join(images_path, images[idx+1]), 0)
+    #     score = calculate_hausdorff_distance(hp, img1, img2, filtered_images_path, images[idx])
+    #     # print("hausdorff distance", score)
 
     ## filtered images: f'./filtered' 
     images = os.listdir(filtered_images_path)
