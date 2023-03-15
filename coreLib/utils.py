@@ -9,6 +9,7 @@ from __future__ import print_function
 from termcolor import colored
 import os 
 import math
+import random
 import numpy as np 
 import torch
 import cv2 
@@ -19,6 +20,8 @@ import matplotlib.pyplot as plt
 from skimage.metrics import structural_similarity
 import img2pdf
 from shapely.geometry import Polygon
+# from hausdorff import hausdorff_distance
+from scipy.spatial.distance import directed_hausdorff
 #---------------------------------------------------------------
 def LOG_INFO(msg,mcolor='blue'):
     '''
@@ -142,6 +145,38 @@ def calculate_ssim(hp, image, image1, filtered_images_path, image_name, write_im
     if(write_img):
         cv2.imwrite(os.path.join(filtered_images_path, image_name), image)
     return score
+#---------------------------------------------------------------
+def calculate_hausdorff_distance(hp, image, image1, filtered_images_path, image_name, write_img=True):
+    """
+        * computes the Hausdorff distance between the rows of X and Y using the Euclidean distance as metric.
+        * Link: https://github.com/mavillan/py-hausdorff
+        args:
+            image    =   1st image from image pair
+            image1   =   2nd image from image pair
+
+    """
+    # score = hausdorff_distance(image, image1, distance='euclidean')
+    score = directed_hausdorff(image, image1)[0]
+    if(score < hp.hausdorff_threshold):
+        return score
+    if(write_img):
+        cv2.imwrite(os.path.join(filtered_images_path, image_name), image)
+    return score
+#---------------------------------------------------------------
+def inpaintredBox(img):
+    #Invert and convert to HSV
+    img_hsv = cv2.cvtColor(255 - img, cv2.COLOR_BGR2HSV)
+
+    #mask all red pixels (cyan in inverted image)
+    lo = np.uint8([80, 30, 0])
+    hi = np.uint8([95, 255, 255])
+
+    mask = cv2.inRange(img_hsv, lo, hi)
+
+    # Inpaint red box
+    result = cv2.inpaint(img, mask, random.randint(3,7), cv2.INPAINT_TELEA)
+
+    return result
 #---------------------------------------------------------------
 def viz_img_pair(ocr, images, filtered_images_path, i,j):
     """
