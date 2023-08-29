@@ -101,7 +101,7 @@ def main(args):
         annot_res = inpaintredBox(img) 
         cv2.imwrite(os.path.join(images_path, images[idx]), annot_res)
 
-    ## filtered images w.r.t. SSIM
+    ## filtered images w.r.t. SSIM ### <<<
     filtered_images_path = create_dir(imgs_dir, 'filtered')
     for idx in range(len(images) - 1):
         img1 = cv2.imread(os.path.join(images_path, images[idx]))
