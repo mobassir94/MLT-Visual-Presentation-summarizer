@@ -52,4 +52,3 @@ This work demonstrates how to convert multilingual presentation videos into read
     ```python
     python main.py -dd ../datas/ -vn https://www.youtube.com/watch?v=k6lCD0iVExo -imd ../images/ -opdf ../outputs/
     ```
-
